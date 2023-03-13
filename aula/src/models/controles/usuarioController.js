@@ -1,12 +1,13 @@
 function usuarioController(app){
     app.get('/usuario', exibir);
     function exibir(req, res){
-        res.send('<h1>Devair</h1>')
+        res.send('Exibindo usuário')
     }
 
     app.post('/usuario', inserir);
     function inserir(req, res){
-        res.send('Rota POST de usuario ativada: tarefa adicionada ao BD')
+        res.send('Inserindo usuário');
+        console.log(req.body)
     }
 }
 export default usuarioController;

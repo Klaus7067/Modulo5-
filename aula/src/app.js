@@ -2,9 +2,11 @@ import express from 'express'
 import usuarioController from './models/controles/usuarioController.js'
 import tarefaController from './models/controles/tarefaController.js'
 
-const app = express()
+const app = express();
 
-usuarioController(app)
-tarefaController(app)
+app.use(express.json());
 
-export default app
+usuarioController(app);
+tarefaController(app);
+
+export default app;
