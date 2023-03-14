@@ -1,17 +1,15 @@
-import Usuario from "../models/Usuario.js";
+import { usuarios } from "../infra/bd.js";
 
 function usuarioController(app){
     app.get('/usuario', exibir);
     function exibir(req, res){
-
-        const usuario1 = new Usuario('naruto', 'naruto@uzumaki', '123456789');
-        
-        res.send(usuario1)
+        res.send(usuarios)
     }
 
     app.post('/usuario', inserir);
     function inserir(req, res){
         res.send('Inserindo usuário');
+        usuarios.push(req.body)
         console.log(req.body)
     }
 }

@@ -1,16 +1,15 @@
-import Tarefa from "../models/Tarefa.js";
+import { tarefas } from "../infra/bd.js";
+
 function tarefaController(app){
     app.get('/tarefa', exibir);
     function exibir(req, res){
-
-        const tarefa1 = new Tarefa('cozinhar', 'fazer a janta', 'iniciando', '31/01/2023');
-
-        res.send(tarefa1)
+        res.send(tarefas)
     }
 
     app.post('/tarefa', inserir);
     function inserir(req, res){
         res.send('Inserindo tarefa');
+        tarefas.push(req.body)
         console.log(req.body)
     }
 }
