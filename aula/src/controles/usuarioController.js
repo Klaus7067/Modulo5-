@@ -1,9 +1,18 @@
 import { usuarios } from "../infra/bd.js";
+import sqlite3 from 'sqlite3';
+import { open } from 'sqlite'
 
 function usuarioController(app) {
     app.get('/usuario', exibir);
     function exibir(req, res) {
-        res.send(usuarios)
+        (async()=>{
+            const db = await open({
+                filename: '.src/infra/bdTarefas.db',
+                driver: sqlite3.Database
+            })
+            const result = await db.all('SELECT * FROM Usuario')
+            res.send(result)
+        })()
     }
 
     app.get('/usuario/email/:email', buscar);
