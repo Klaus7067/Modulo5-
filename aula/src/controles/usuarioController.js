@@ -95,7 +95,7 @@ function usuarioController(app) {
                 filename: './src/infra/bdTarefas.db',
                 driver: sqlite3.Database
             })
-            await db.run('INSERT INTO Usuario(nome, email, senha) VALUES (?, ? , ?)', req.body.nome, req.body.email, req.body.senha )
+            await db.run('INSERT INTO Usuario(nome, email, senha) VALUES (?, ?, ?)', req.body.nome, req.body.email, req.body.senha )
             res.send(`Usuário ${req.body.nome}, inserido com sucesso!`)
             db.close
         })()
