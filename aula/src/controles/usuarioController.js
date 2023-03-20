@@ -3,8 +3,8 @@ import sqlite3 from 'sqlite3';
 import { open } from 'sqlite'
 
 function usuarioController(app) {
-    app.get('/usuarioall', exibirAll);
-    function exibirAll(req, res) {
+    app.get('/usuario', exibir);
+    function exibir(req, res) {
         (async()=>{
             const db = await open({
                 filename: './src/infra/bdTarefas.db',
@@ -15,44 +15,93 @@ function usuarioController(app) {
         })()
     }
 
-    app.get('/usuario', exibir);
-    function exibir(req, res) {
+    // app.get('/usuario', exibir);
+    // function exibir(req, res) {
+    //     (async()=>{
+    //         const db = await open({
+    //             filename: './src/infra/bdTarefas.db',
+    //             driver: sqlite3.Database
+    //         })
+    //         const sql = 'SELECT * FROM Usuario'
+    //         db.each(sql,(err, row)=>{
+    //             if(err){
+    //                 throw err;
+    //             }
+    //             res.send(`${row.nome} ${row.email} - ${row.senha}`);
+    //         });
+    //     })()
+    // }
+
+    app.get('/usuario/email/:email', buscarEmail);
+    function buscarEmail(req, res) {
         (async()=>{
             const db = await open({
                 filename: './src/infra/bdTarefas.db',
                 driver: sqlite3.Database
             })
-            const sql = 'SELECT * FROM Usuario'
-            db.each(sql,(err, row)=>{
-                if(err){
-                    throw err;
-                }
-                res.send(`${row.nome} ${row.email} - ${row.senha}`);
-            });
+            const result = await db.all('SELECT * FROM Usuario where email like ?', req.params.email)
+            if (result!=''){
+                res.send(result)
+            } else {
+                res.send(`Não exite usuário com o email ${req.params.email}`)
+            }
+            db.close
         })()
+        // const usuario = usuarios.find(usuario => usuario.email === req.params.email)
+        // if (usuario) {
+        //     res.send(
+        //         `<h1>Usuário</h1><br/>
+        //         Nome: ${usuario.nome}<br/>
+        //         Email: ${usuario.email}<br/>
+        //         Senha: ${usuario.senha}.`
+        //     )
+        // } else {
+        //     res.send(`Usuário: ${req.params.email} não encontrado!`);
+        // }
     }
 
-    app.get('/usuario/email/:email', buscar);
-    function buscar(req, res) {
-        const usuario = usuarios.find(usuario => usuario.email === req.params.email)
-        if (usuario) {
-            res.send(
-                `<h1>Usuário</h1><br/>
-                Nome: ${usuario.nome}<br/>
-                Email: ${usuario.email}<br/>
-                Senha: ${usuario.senha}.`
-            )
-        } else {
-            res.send(`Usuário: ${req.params.email} não encontrado!`);
-        }
-        res.send(req.params.email)
+    app.get('/usuario/nome/:nome', buscarNome);
+    function buscarNome(req, res) {
+        (async()=>{
+            const db = await open({
+                filename: './src/infra/bdTarefas.db',
+                driver: sqlite3.Database
+            })
+            const result = await db.all('SELECT * FROM Usuario where nome like ?', req.params.nome)
+            if (result!=''){
+                res.send(result)
+            } else {
+                res.send(`Não exite usuário com o nome ${req.params.nome}`)
+            }
+            db.close
+        })()
+        // const usuario = usuarios.find(usuario => usuario.email === req.params.email)
+        // if (usuario) {
+        //     res.send(
+        //         `<h1>Usuário</h1><br/>
+        //         Nome: ${usuario.nome}<br/>
+        //         Email: ${usuario.email}<br/>
+        //         Senha: ${usuario.senha}.`
+        //     )
+        // } else {
+        //     res.send(`Usuário: ${req.params.email} não encontrado!`);
+        // }
     }
 
     app.post('/usuario', inserir);
     function inserir(req, res) {
-        res.send('Inserindo usuário');
-        usuarios.push(req.body)
-        console.log(req.body)
+        (async()=>{
+            const db = await open({
+                filename: './src/infra/bdTarefas.db',
+                driver: sqlite3.Database
+            })
+            await db.run('INSERT INTO Usuario(nome, email, senha) VALUES (?, ? , ?)', req.body.nome, req.body.email, req.body.senha )
+            res.send(`Usuário ${req.body.nome}, inserido com sucesso!`)
+            db.close
+        })()
+        // res.send('Inserindo usuário');
+        // usuarios.push(req.body)
+        // console.log(req.body)
     }
 
     app.delete('/usuario/email/:email', deletar)
