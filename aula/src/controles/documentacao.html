@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Documentação API</title>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand">Documentação da API</a>
+                <button class="btn btn-primary" type="submit">Usuário</button>
+                <button class="btn btn-success" type="submit">Tarefa</button>
+            </div>
+        </nav>
+        <br>
+    </header>
+
+    <main>
+        <div class="card">
+            <h5>Rota /usuario</h5>
+            <div class="card-body">
+                <h5 class="card-title">Rota para listar usuários cadastrados.</h5>
+                <p class="card-text">Essa rota lista todos os usuários do banco de dados com atributos id_usuario, nome,
+                    email e senha.</p>
+                <p class="card-text">Exemplo de utilização da rota /usuario:</p>
+                <p class="card-text">[{"id_usuario":1,"nome":"Vinicius
+                    Aguiar","email":"vinicius@senac.com","senha":"123"},{"id_usuario":3,"nome":"admin","email":"admin@dominio.com","senha":"admin"},{"id_usuario":4,"nome":"Washington","email":"hostoluis@gmail.com","senha":"arroz123"},{"id_usuario":6,"nome":"efgh","email":"ef@gh.com","senha":"12"}]
+                </p>
+                <a href="/usuario" class="btn btn-primary">Rota /usuario</a>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="card">
+            <h5>Rota /usuario/email</h5>
+            <div class="card-body">
+                <h5 class="card-title">Rota para buscar usuários por email.</h5>
+                <p class="card-text">Essa rota lista todos os usuários do banco de dados através de um email setado.</p>
+                <p class="card-text">Exemplo de utilização da rota /usuario/email/<b>vinicius@senac.com</b></p>
+                <p class="card-text">[{"id_usuario":1,"nome":"ViniciusAguiar","email":"vinicius@senac.com","senha":"123"}]</p>
+
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">usuario/email/</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    <a href="/usuario" class="btn btn-primary">Buscar</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
